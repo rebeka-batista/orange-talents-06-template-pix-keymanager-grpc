@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "br.com.desafio";
+option java_outer_classname = "Pix";
+option objc_class_prefix = "HLW";
+
+package br.com.desafio;
+
+service PixService {
+  rpc registraChavePix (RegistraPixRequest) returns (RegistraPixResponse) {}
+}
+
+enum TipoConta {
+  CONTA_INVALIDA = 0;
+  CONTA_CORRENTE = 1;
+  CONTA_POUPANCA = 2;
+}
+
+enum TipoChave {
+  CHAVE_INVALIDA = 0;
+  CPF = 1;
+  CELULAR = 2;
+  EMAIL = 3;
+  ALEATORIA = 4;
+}
+
+message RegistraPixRequest {
+  string clienteId = 1;
+  TipoChave tipoChave = 2;
+  string chave = 3;
+  TipoConta tipoConta = 4;
+}
+
+message RegistraPixResponse {
+  string clienteId = 1;
+  string pixId = 2;
+}
