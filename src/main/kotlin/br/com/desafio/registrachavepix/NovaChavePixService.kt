@@ -1,12 +1,11 @@
-package br.com.desafio
+package br.com.desafio.registrachavepix
 
-import io.micronaut.validation.Validated
-import jakarta.inject.Inject
-import jakarta.inject.Singleton
+import br.com.desafio.validator.ChavePixExistenteException
 import org.slf4j.LoggerFactory
-import javax.transaction.Transactional
+import javax.inject.Inject
+import javax.inject.Singleton
 
-@Validated
+
 @Singleton
 class NovaChavePixService(
     @Inject val repository: ChaveRepository,
@@ -15,18 +14,16 @@ class NovaChavePixService(
 
     private val LOGGER = LoggerFactory.getLogger(this::class.java)
 
-    @Transactional
     fun registra(novaChave: NovaChavePix): ChavePix {
-        if (repository.existsByChave(novaChave.chave))
-            throw IllegalArgumentException("Chave pix'${novaChave}' existente")
+        if (repository.existsByChave(novaChave.chave)) {
+            throw  ChavePixExistenteException("Chave pix já existente")
+        }
 
         val response = itauClient.consultaCliente(novaChave.clienteId!!, novaChave.tipoDeConta!!.name)
-        val conta = response.body()?.toModel() ?: throw IllegalArgumentException("Cliente não encontrado no Itaú")
-
+        val conta = response.body()?.toModel() ?: throw IllegalStateException("Cliente não encontrado no Itaú")
 
         val chave = novaChave.toModel(conta)
         repository.save(chave)
-
         return chave
     }
 }

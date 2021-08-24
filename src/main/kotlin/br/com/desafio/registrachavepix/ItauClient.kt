@@ -1,4 +1,4 @@
-package br.com.desafio
+package br.com.desafio.registrachavepix
 
 import io.micronaut.http.HttpResponse
 import io.micronaut.http.annotation.Get

@@ -1,12 +1,15 @@
-package br.com.desafio
+package br.com.desafio.registrachavepix
 
+import br.com.desafio.PixServiceGrpc
+import br.com.desafio.RegistraPixRequest
+import br.com.desafio.RegistraPixResponse
 import io.grpc.stub.StreamObserver
-import jakarta.inject.Inject
-import jakarta.inject.Singleton
+import javax.inject.Inject
+import javax.inject.Singleton
 
 @Singleton
 class RegistrarChavePixEndpoint(
-    @Inject private val service: NovaChavePixService,
+    @Inject private var service: NovaChavePixService,
 ) : PixServiceGrpc.PixServiceImplBase() {
 
     override fun registraChavePix(
@@ -25,16 +28,4 @@ class RegistrarChavePixEndpoint(
         responseObserver.onCompleted()
     }
 
-}
-
-fun RegistraPixRequest.toModel(): NovaChavePix {
-    return NovaChavePix(
-        clienteId = clienteId, tipoDeChave = when (tipoChave) {
-            TipoChave.CHAVE_INVALIDA -> null
-            else -> TipoChave.valueOf(tipoChave.name)
-        }!!, chave = chave, tipoDeConta = when (tipoConta) {
-            TipoConta.CONTA_INVALIDA -> null
-            else -> TipoConta.valueOf(tipoConta.name)
-        }
-    )
 }

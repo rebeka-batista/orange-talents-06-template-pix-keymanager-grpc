@@ -1,12 +1,12 @@
 plugins {
-    id("org.jetbrains.kotlin.jvm") version "1.5.21"
-    id("org.jetbrains.kotlin.kapt") version "1.5.21"
+    id("org.jetbrains.kotlin.jvm") version "1.4.21"
+    id("org.jetbrains.kotlin.kapt") version "1.4.21"
     id("com.github.johnrengelman.shadow") version "7.0.0"
-    id("io.micronaut.application") version "2.0.3"
-    id("org.jetbrains.kotlin.plugin.allopen") version "1.5.21"
-    id("org.jetbrains.kotlin.plugin.jpa") version "1.5.21"
+    id("io.micronaut.application") version "1.5.4"
+    id("org.jetbrains.kotlin.plugin.allopen") version "1.4.32"
+    id("org.jetbrains.kotlin.plugin.jpa") version "1.4.32"
     id("com.google.protobuf") version "0.8.15"
-    id("org.jetbrains.kotlin.plugin.noarg") version "1.5.21"
+    id("org.jetbrains.kotlin.plugin.noarg") version "1.4.32"
 }
 
 version = "0.1"
@@ -25,8 +25,8 @@ micronaut {
 }
 
 dependencies {
-    kapt("io.micronaut:micronaut-http-validation")
-    kapt("io.micronaut.data:micronaut-data-processor")
+    implementation("org.hibernate:hibernate-validator:6.1.6.Final")
+
     implementation("io.micronaut:micronaut-http-client")
     implementation("io.micronaut:micronaut-runtime")
     implementation("io.micronaut.beanvalidation:micronaut-hibernate-validator")
@@ -80,9 +80,9 @@ sourceSets {
 }
 
 protobuf {
-    protoc { artifact = "com.google.protobuf:protoc:3.17.2" }
+    protoc { artifact = "com.google.protobuf:protoc:3.17.0" }
     plugins {
-        grpc { artifact = "io.grpc:protoc-gen-grpc-java:1.38.0" }
+        grpc { artifact = "io.grpc:protoc-gen-grpc-java:1.36.2" }
     }
     generateProtoTasks {
         all()*.plugins { grpc {} }
