@@ -9,12 +9,11 @@ fun RegistraPixRequest.toModel(): NovaChavePix {
     return NovaChavePix(
         clienteId = clienteId,
         tipoDeChave = when (tipoChave) {
-            TipoChave.CHAVE_INVALIDA -> throw
-            IllegalArgumentException("Tipo de Chave desconhecida")
+            TipoChave.CHAVE_INVALIDA -> throw IllegalArgumentException("Tipo de Chave desconhecida")
             else -> br.com.desafio.registrachavepix.TipoChavePix.valueOf(tipoChave.name)
-        }, chave = chave, tipoDeConta = when (tipoConta) {
-            TipoConta.CONTA_INVALIDA-> throw
-            IllegalArgumentException("Tipo de Conta desconhecida")
+        }, chave = chave,
+        tipoDeConta = when (tipoConta) {
+            TipoConta.CONTA_INVALIDA-> throw IllegalArgumentException("Tipo de Conta desconhecida")
             else -> TipoConta.valueOf(tipoConta.name)
         }
     )
